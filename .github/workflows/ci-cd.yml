@@ -41,47 +41,47 @@ jobs:
           push: false
           tags: java-calculator:latest
   
-javascript-pipeline:
-  name: JavaScript Pipeline
-  runs-on: ubuntu-latest
-  defaults:
-    run:
-      working-directory: Javascript  # Especifica el directorio de trabajo
-  
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+  javascript-pipeline:
+    name: JavaScript Pipeline
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Javascript  # Especifica el directorio de trabajo
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Check for Javascript Directory
-      run: |
-        if [ ! -d "Javascript" ]; then
-          echo "Error: 'Javascript' directory does not exist."
-          exit 1
-        fi
+      - name: Check for Javascript Directory
+        run: |
+          if [ ! -d "Javascript" ]; then
+            echo "Error: 'Javascript' directory does not exist."
+            exit 1
+          fi
 
-    - name: List directories
-      run: ls -la
+      - name: List directories
+        run: ls -la
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run linter
-      run: npm run lint
+      - name: Run linter
+        run: npm run lint
 
-    - name: Run tests
-      run: npm test
+      - name: Run tests
+        run: npm test
 
-    - name: Build
-      run: npm run build
+      - name: Build
+        run: npm run build
 
-    - name: Build Docker image
-      uses: docker/build-push-action@v4
-      with:
-        context: ./Javascript
-        push: false
-        tags: js-calculator:latest
+      - name: Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./Javascript
+          push: false
+          tags: js-calculator:latest

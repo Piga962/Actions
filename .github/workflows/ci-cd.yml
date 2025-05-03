@@ -42,36 +42,36 @@ jobs:
           tags: java-calculator:latest
   
   javascript-pipeline:
-  name: JavaScript Pipeline
-  runs-on: ubuntu-latest
-  
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    name: JavaScript Pipeline
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: List directories
-      run: ls -la
+      - name: List directories
+        run: ls -la
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: Install dependencies
-      run: cd Javascript && npm install
+      - name: Install dependencies
+        run: cd Javascript && npm install
 
-    - name: Run linter
-      run: cd Javascript && npm run lint
+      - name: Run linter
+        run: cd Javascript && npm run lint
 
-    - name: Run tests
-      run: cd Javascript && npm test
+      - name: Run tests
+        run: cd Javascript && npm test
 
-    - name: Build
-      run: cd Javascript && npm run build
+      - name: Build
+        run: cd Javascript && npm run build
 
-    - name: Build Docker image
-      uses: docker/build-push-action@v4
-      with:
-        context: ./Javascript
-        push: false
-        tags: js-calculator:latest
+      - name: Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./Javascript
+          push: false
+          tags: js-calculator:latest

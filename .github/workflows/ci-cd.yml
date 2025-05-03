@@ -1,0 +1,79 @@
+name: Multi-Project CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  java-pipeline:
+    name: Java Pipeline
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: java  # Especifica el directorio de trabajo
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+      
+      - name: Run linter
+        run: mvn checkstyle:check
+      
+      - name: Run tests
+        run: mvn test
+      
+      - name: Build with Maven
+        run: mvn package -DskipTests
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./java  # Especifica el contexto para Docker
+          push: false
+          tags: java-calculator:latest
+  
+  javascript-pipeline:
+    name: JavaScript Pipeline
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: javascript  # Especifica el directorio de trabajo
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'javascript/package-lock.json'  # Path al archivo lock
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run linter
+        run: npm run lint
+      
+      - name: Run tests
+        run: npm test
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./javascript  # Especifica el contexto para Docker
+          push: false
+          tags: js-calculator:latest

@@ -51,6 +51,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: List directories
+        run: ls -la
+    
+      - name: List Javascript directory
+        run: ls -la Javascript || echo "Directory not found"
       
       - name: Setup Node.js
         uses: actions/setup-node@v3

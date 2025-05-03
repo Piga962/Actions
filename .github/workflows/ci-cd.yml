@@ -49,6 +49,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Debug - List repository content
+        run: |
+          echo "Repository root content:"
+          ls -la
+          echo "======================="
+
       - name: List directories
         run: ls -la
 

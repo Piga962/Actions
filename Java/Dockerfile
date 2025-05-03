@@ -1,5 +1,8 @@
 FROM eclipse-temurin:11-jdk AS build
 
+# Instalar Maven
+RUN apt-get update && apt-get install -y maven
+
 WORKDIR /app
 
 # Copiar los archivos del proyecto

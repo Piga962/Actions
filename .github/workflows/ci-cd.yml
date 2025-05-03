@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: java  # Especifica el directorio de trabajo
+        working-directory: Java  # Especifica el directorio de trabajo
     
     steps:
       - name: Checkout repository
@@ -37,7 +37,7 @@ jobs:
       - name: Build Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ./java  # Especifica el contexto para Docker
+          context: ./Java  # Especifica el contexto para Docker
           push: false
           tags: java-calculator:latest
   
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: javascript  # Especifica el directorio de trabajo
+        working-directory: Javascript  # Especifica el directorio de trabajo
     
     steps:
       - name: Checkout repository
@@ -57,7 +57,6 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: 'javascript/package-lock.json'  # Path al archivo lock
       
       - name: Install dependencies
         run: npm ci
